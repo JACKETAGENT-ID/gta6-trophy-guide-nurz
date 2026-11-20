@@ -1,20 +1,15 @@
-// A working gta6-trophy-guide-01 entry (Node 22, standard library only): the guide is this directory's app/ folder,
-// plain static files a browser opens at app/index.html (ES modules, CSS, no build step), offline: it loads nothing
-// over the network, and its trophy list and guides are app/data/trophies.json. The program hands it in: it copies app/
-// and screenshots/ from beside this file to /output and writes /output/dossier.json, the summary the judge reads (your
-// screenshots, the first load's files and bytes, and your source), with the vendored make.fun library. Leave
-// vendor/makefun-frontend.ts as it is: the scorer requires dossier.json to be byte for byte what its own copy writes.
-//
-// Only the plumbing, not a winner: a plain checklist of the 55 trophies with a one-line hint each. Write a real guide
-// for every trophy in your own words, a roadmap to the platinum, filters and a spoiler setting in app/, put 3 or 4 PNG
-// or JPEG screenshots of it in screenshots/ (the first by name is the cover; shots.json says which views this
-// starter's were taken of), and run it.
-//
-// Serve it locally with `node serve.ts`, then open http://localhost:8080.
+// Leonida Legend — GTA 6 Trophy Guide & Tracker (nurz entry for gta6-trophy-guide-01).
+// An offline static guide for all 55 PS5 trophies: original 3–5 sentence guides in
+// app/data/guides.js merged with the official list in app/data/trophies.json, a 7-stage
+// roadmap to the platinum, missable warnings, filters, spoiler protection, and progress
+// saved in localStorage with export/import. Dark neon Vice styling, no network calls.
+// This program hands the entry in: it copies app/ and screenshots/ to the output folder
+// and writes dossier.json with the vendored make.fun library (vendor file untouched).
+// Run locally with `node serve.ts`, then open http://localhost:8080.
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-frontend.ts';
@@ -34,3 +29,13 @@ writeFileSync(
   join(out, 'dossier.json'),
   buildDossier(out, { text_max_bytes: 163840, screenshots: { max: 4, max_bytes: 262144 }, app_max_files: 993, app_max_bytes: 50331648 }),
 );
+
+// Leonida Legend handover summary (authored step): report what was handed in.
+try {
+  const trophyData = JSON.parse(readFileSync(join(here, 'app', 'data', 'trophies.json'), 'utf8'));
+  const trophyCount = Array.isArray(trophyData.trophies) ? trophyData.trophies.length : 0;
+  const shotCount = existsSync(join(out, 'screenshots')) ? readdirSync(join(out, 'screenshots')).filter((f) => /\.(jpe?g|png)$/i.test(f)).length : 0;
+  console.log(`Leonida Legend handed in: ${trophyCount} trophies, ${shotCount} screenshots.`);
+} catch {
+  console.log('Leonida Legend handed in: dossier written (summary unavailable).');
+}

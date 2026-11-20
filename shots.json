@@ -1,5 +1,1 @@
-[
-  { "file": "1-checklist.jpg", "path": "/", "viewport": { "width": 1280, "height": 800 } },
-  { "file": "2-silver.jpg", "path": "/", "grade": "silver", "viewport": { "width": 1280, "height": 800 } },
-  { "file": "3-bronze.jpg", "path": "/", "grade": "bronze", "scroll": 1400, "viewport": { "width": 1280, "height": 800 } }
-]
+[{"file":"1-cover.jpg","path":"/","view":"Tracker top with progress ring at 11 percent, grade counts and trophy list grouped by grade","viewport":{"height":800,"width":1280}},{"file":"2-guide.jpg","path":"/","view":"Trophy detail pane open for Break the Bank with full original guide, roadmap stage and named sources","viewport":{"height":800,"width":1280}},{"file":"3-roadmap.jpg","path":"/","view":"Roadmap view with the seven stages to the platinum and missable warnings","viewport":{"height":800,"width":1280}},{"file":"4-missables.jpg","path":"/","view":"Missable filter active showing only the four missable trophies","viewport":{"height":800,"width":1280}}]
